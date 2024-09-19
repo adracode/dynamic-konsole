@@ -11,12 +11,10 @@ class Main:
     def add_konsole(self, konsole_name):
         konsole = KonsoleWindow(konsole_name, self.bus)
         self.konsole_windows[konsole_name] = konsole
-        print(f"ajout {konsole_name}")
 
 
     def remove_konsole(self, konsole_name):
         self.konsole_windows.pop(konsole_name)
-        print(f"suppression {konsole_name}")
 
 
     def __init__(self):
@@ -28,7 +26,6 @@ class Main:
         dbus_service = dbus.Interface(self.bus.get_object('org.freedesktop.DBus', '/'),  'org.freedesktop.DBus')
         for konsole in list(filter(lambda service: 'org.kde.konsole-' in service, dbus_service.ListNames())):
             self.add_konsole(konsole)
-
 
         # Listen for new Konsole windows and add them
         def on_name_owner_change(name: str, old_owner: str, new_owner: str):
